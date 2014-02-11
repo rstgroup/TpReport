@@ -30,7 +30,7 @@ class HttpErrorException extends \Exception {
                 $message = "Not implemented. The requested action is either not supported or not implemented yet.";
                 break;
             default:
-                $message = '';
+                $message = 'Unknown error';
                 break;
         }
        

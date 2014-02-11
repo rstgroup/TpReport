@@ -10,21 +10,36 @@ require_once __DIR__ . '/../src/HttpErrorException.php';
 class HttpErrorExceptionTest extends \PHPUnit_Framework_TestCase
 {
     
-    protected $codes = array(400, 401, 403, 404, 500, 501);
     
     public function testInstance() {
 
-        $this->assertInstanceOf('Exception', new HttpErrorException($this->codes[0]));
+        $this->assertInstanceOf('Exception', new HttpErrorException(404));
 
     }
     
-    public function testCreatingExceptions() {
+    /**
+     * @param int $code Error code
+     *
+     * @dataProvider providerTestMessages
+     */
+    public function testMessages($code) {
         
-        foreach ($this->codes as $code) {
-            $e = new HttpErrorException($code);
-            $this->assertEquals($code, $e->getCode(), 'Wrong error codes');
-            $this->assertNotEmpty($e->getMessage(), 'Empty error message');
-            unset($e);
-        }
-    } 
+        $e = new HttpErrorException($code);
+        $this->assertEquals($code, $e->getCode(), 'Wrong error codes');
+        $this->assertNotEmpty($e->getMessage(), 'Empty error message');
+        unset($e);
+    }
+    
+    public function providerTestMessages() {
+        return array(
+            array(400),
+            array(401),
+            array(403),
+            array(404),
+            array(500),
+            array(501),
+            array(666)
+            );
+    }
+    
 }
