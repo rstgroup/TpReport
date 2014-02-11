@@ -12,5 +12,11 @@
     ],
     "require": {
         "nategood/httpful": "*"
+    },
+    
+    "autoload": {
+        "psr-4": {
+            "TpReport\\": ""
+        }
     }
 }

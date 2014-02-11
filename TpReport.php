@@ -1,5 +1,7 @@
 <?php
 
+namespace TpReport;
+
 /**
  * Fetching reports ( or collections of entities using TargetProcess's API
  * 
@@ -162,7 +164,7 @@ class TpReport {
      * Do the request.
      * 
      * @return array 
-     * @throws HttpErrorException
+     * @throws TpReport\HttpErrorException
      */
     public function query() {
         
@@ -173,7 +175,7 @@ class TpReport {
         $error_code = (int)$response->code;
         
         if ((int)$error_code != 200) {
-            throw new HttpErrorException($error_code);
+            throw new \TpReport\HttpErrorException($error_code);
         }
 
         return $response->body;
