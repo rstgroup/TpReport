@@ -11,7 +11,6 @@
         }
     ],
     "require": {
-        "nategood/httpful": "*",
-        "domnikl/statsd": "*"
+        "nategood/httpful": "*"
     }
 }
