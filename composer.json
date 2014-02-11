@@ -1,0 +1,17 @@
+{
+    "name": "ziolek/tpreport",
+    "description": "Simple tool for fetching collections stats of entities from TargetProcess.",
+    "homepage": "http://github.com/ziolek/TpReport",
+    "license": "MIT",
+    "keywords": ["tp", "TargetProcess", "api", "rest"],
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "Marek Ziółkowski"
+        }
+    ],
+    "require": {
+        "nategood/httpful": "*",
+        "domnikl/statsd": "*"
+    }
+}
