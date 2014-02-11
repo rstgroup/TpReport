@@ -9,6 +9,5 @@ Configuring
 ```
 composer install
 ```
-2. Edit Config.php
-3. Use TpReport class according to example.php
+2. Use TpReport class according to example.php
 
