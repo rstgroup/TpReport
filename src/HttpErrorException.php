@@ -5,7 +5,7 @@ namespace TpReport;
 /**
  * @see http://dev.targetprocess.com/rest/response_format#code
  */
-class HttpErrorException extends Exception {
+class HttpErrorException extends \Exception {
     
 
     public function __construct($code) {
@@ -33,7 +33,7 @@ class HttpErrorException extends Exception {
                 $message = '';
                 break;
         }
-        
+       
       parent::__construct($message, $code, NULL);
       
 }
