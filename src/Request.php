@@ -7,7 +7,7 @@ namespace TpReport;
  * 
  * @author Marek Ziółkowski
  */
-class TpReport {
+class Request {
     
     protected $params = array();
     protected $collection;
@@ -168,7 +168,7 @@ class TpReport {
      */
     public function query() {
         
-        $response = Httpful\Request::get(str_replace(" ", "%20", $this->getUrl()))
+        $response = \Httpful\Request::get(str_replace(" ", "%20", $this->getUrl()))
                 ->addHeader('Accept', 'application/json')
                 ->authenticateWith($this->username, $this->password)
                 ->send();
