@@ -5,7 +5,7 @@ namespace TpReport;
 require_once __DIR__ . '/../src/HttpErrorException.php';
 
 /**
- * @author marek
+ * @author Marek Ziółkowski
  */
 class HttpErrorExceptionTest extends \PHPUnit_Framework_TestCase
 {

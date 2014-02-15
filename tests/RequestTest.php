@@ -7,7 +7,7 @@ require_once __DIR__ . '/../src/Request.php';
 /**
  * Tests for TpReport\Request class.
  *
- * @author Marek
+ * @author Marek Ziółkowski
  */
 class RequestTest extends \PHPUnit_Framework_TestCase
 {

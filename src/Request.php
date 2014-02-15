@@ -7,42 +7,52 @@ namespace TpReport;
  * 
  * @author Marek Ziółkowski
  */
-class Request {
-    
+class Request
+{
+
     protected $params = array();
     protected $collection;
     private $api_base_url;
     private $username;
     private $password;
-    
-    public function __construct($api_base_url, $username = null, $password = null) {
-        if ($api_base_url =='') {
-            throw new Exception('Undefined API base URL in config');
+
+    /**
+     * 
+     * @param string $api_base_url i.e. http://localhost/TargetProcess/api/v1
+     * @param string $username
+     * @param string $password
+     * @throws \Exception
+     */
+    public function __construct($api_base_url, $username = null, $password = null)
+    {
+        if ($api_base_url == '') {
+            throw new Exception('Undefined API base URL');
         } else {
             $this->api_base_url = $api_base_url;
         }
         $this->username = $username;
         $this->password = $password;
     }
-    
+
     /**
      * Generates the condition string that will be put in the WHERE part.
      * Based on Yii query builder.
      * 
      * @return string the condition string to put in the WHERE part
-     * @throws Exception
+     * @throws \Exception
      */
-    private function processConditions($conditions) {
+    private function processConditions($conditions)
+    {
         if (!is_array($conditions)) {
-            return $conditions;        
-        } elseif($conditions===array()) {
+            return $conditions;
+        } elseif ($conditions === array()) {
             return '';
         }
         $n = count($conditions);
         $operator = strtolower($conditions[0]);
         if ($operator === 'or' || $operator === 'and') {
             $parts = array();
-            for ($i = 1; $i < $n;  ++$i) {
+            for ($i = 1; $i < $n; ++$i) {
                 $condition = $this->processConditions($conditions[$i]);
                 if ($condition !== '') {
                     $parts[] = '(' . $condition . ')';
@@ -50,8 +60,8 @@ class Request {
             }
             return $parts === array() ? '' : implode(' ' . $operator . ' ', $parts);
         }
-        
-         if (!isset($conditions[1], $conditions[2])) {
+
+        if (!isset($conditions[1], $conditions[2])) {
             return '';
         }
 
@@ -66,60 +76,65 @@ class Request {
                 return $operator === 'in' ? '0=1' : '';
             } foreach ($values as $i => $value) {
                 if (is_string($value)) {
-                    $values[$i] = "'".$value."'";
-                }
-                else {
+                    $values[$i] = "'" . $value . "'";
+                } else {
                     $values[$i] = (string) $value;
                 }
             }
             return $column . ' ' . $operator . ' (' . implode(',', $values) . ')';
         }
-        throw new \Exception('Unknown operator '.$operator);
+        throw new \Exception('Unknown operator ' . $operator);
     }
-    
+
     /**
      * Set collection name.
      * 
      * @param string $name Collection name
+     * @return \TpReport
      */
-    public function collection($name) {
+    public function collection($name)
+    {
         $this->collection = $name;
         return $this;
     }
-    
+
     /**
      * Always overwrites previews where conditions.
      * 
      * @param mixed $conditions the conditions that should be put in the WHERE part.
      * @return \TpReport
      */
-    public function where($conditions) {
+    public function where($conditions)
+    {
         $this->params['where'] = $this->processConditions($conditions);
         return $this;
     }
 
     /**
+     * Adds any parameters as an array.
      * 
-     * @param string $name
-     * @param array $values
+     * @param string $name Name of the parameter
+     * @param mixed $values
      */
-    private function addArrayParams($name, $values) {
+    private function addArrayParams($name, $values)
+    {
         if (!is_array($values)) {
             $values = array($values);
         }
-        
+
         if ($name != '') {
             $this->params[$name] = $values;
         }
     }
-    
+
     /**
-     * You can get entities with specified fields only.
+     * You can get items with specified fields only.
      * 
      * @param array $fields Fields to be included
      * @return \TpReport
      */
-    public function inc($fields) {
+    public function inc($fields)
+    {
         $this->addArrayParams('include', $fields);
         return $this;
     }
@@ -131,13 +146,14 @@ class Request {
      * @param int $limit
      * @return \TpReport
      */
-    public function take($limit) {
+    public function take($limit)
+    {
         if (is_int($limit)) {
             $this->params['take'] = $limit;
         }
         return $this;
     }
-    
+
     /**
      * Final URL buliding.
      * @see http://dev.targetprocess.com/rest/response_format#filtering
@@ -157,7 +173,7 @@ class Request {
                     $value_arr = $value;
                     $value = '[' . implode(',', $value_arr) . ']';
                 }
-                if ($value != '') {            
+                if ($value != '') {
                     $q.=($first ? '?' : '&') . $name . '=' . $value;
                     $first = false;
                 }
@@ -170,22 +186,21 @@ class Request {
      * Do the request.
      * 
      * @return array 
-     * @throws TpReport\HttpErrorException
+     * @throws \TpReport\HttpErrorException
      */
-    public function query() 
-    {    
+    public function query()
+    {
         $response = \Httpful\Request::get(str_replace(" ", "%20", $this->getUrl()))
                 ->addHeader('Accept', 'application/json')
                 ->authenticateWith($this->username, $this->password)
                 ->send();
-        $error_code = (int)$response->code;
-        
-        if ((int)$error_code != 200) {
+        $error_code = (int) $response->code;
+
+        if ((int) $error_code != 200) {
             throw new \TpReport\HttpErrorException($error_code);
         }
 
         return $response->body;
     }
+
 }
-
-

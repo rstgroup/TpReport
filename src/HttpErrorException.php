@@ -3,6 +3,9 @@
 namespace TpReport;
 
 /**
+ * Handling TargetProcess REST error codes.
+ * 
+ * @author Marek Ziółkowski
  * @see http://dev.targetprocess.com/rest/response_format#code
  */
 class HttpErrorException extends \Exception {
