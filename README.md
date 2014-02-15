@@ -1,13 +1,21 @@
 TpReport
 ========
 
-Simple tool for fetching collections stats of entities from [TargetProcess](http://dev.targetprocess.com/rest/getting_started).
+Simple tool for fetching items from [TargetProcess](http://dev.targetprocess.com/rest/getting_started).
 
 Configuring
 -----------
-1. Install dependencies:
+* Use composer and define dependencies by adding following configuration:
 ```
-composer install
+   "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ziolek/TpReport"
+        }
+    ],
+    "require": {
+        "ziolek/TpReport": "dev-master",
+    }
 ```
-2. Use TpReport class according to example.php
+* Use TpReport\Request class according to `example.php`
 
