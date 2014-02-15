@@ -1,10 +1,10 @@
 {
     "name": "ziolek/tpreport",
-    "description": "Simple tool for fetching collections stats of entities from TargetProcess.",
+    "description": "Simple tool for fetching items from TargetProcess.",
     "homepage": "http://github.com/ziolek/TpReport",
     "license": "MIT",
     "keywords": ["tp", "TargetProcess", "api", "rest"],
-    "version": "0.1.0",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Marek Ziółkowski"
