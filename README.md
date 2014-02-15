@@ -1,4 +1,4 @@
-TpReport
+TpReport [![Build Status](https://travis-ci.org/ziolek/TpReport.png?branch=master)](https://travis-ci.org/ziolek/TpReport)
 ========
 
 Simple tool for fetching items from [TargetProcess](http://dev.targetprocess.com/rest/getting_started).
