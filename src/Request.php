@@ -74,7 +74,7 @@ class Request {
             }
             return $column . ' ' . $operator . ' (' . implode(',', $values) . ')';
         }
-        throw new Exception('Unknown operator '.$operator);
+        throw new \Exception('Unknown operator '.$operator);
     }
     
     /**
@@ -119,19 +119,22 @@ class Request {
      * @param array $fields Fields to be included
      * @return \TpReport
      */
-    public function inc($fields) {  
+    public function inc($fields) {
         $this->addArrayParams('include', $fields);
         return $this;
     }
 
     /**
-     * Set the amount of entities.
+     * Set the amount of items to be taken.
+     * @see http://dev.targetprocess.com/rest/response_format#paging
      * 
      * @param int $limit
      * @return \TpReport
      */
     public function take($limit) {
-        $this->params['take'] = $limit;
+        if (is_int($limit)) {
+            $this->params['take'] = $limit;
+        }
         return $this;
     }
     
@@ -139,11 +142,13 @@ class Request {
      * Final URL buliding.
      * @see http://dev.targetprocess.com/rest/response_format#filtering
      * 
-     * @throws Exception
      * @return string
      */
     public function getUrl()
     {
+        if (!isset($this->collection) || $this->collection == '') {
+            throw new \Exception("Can't build URL: undefined collection");
+        }
         $q = $this->api_base_url . '/' . $this->collection;
         if (!empty($this->params)) {
             $first = true;
@@ -152,9 +157,10 @@ class Request {
                     $value_arr = $value;
                     $value = '[' . implode(',', $value_arr) . ']';
                 }
-
-                $q.=($first ? '?' : '&') . $name . '=' . $value;
-                $first = false;
+                if ($value != '') {            
+                    $q.=($first ? '?' : '&') . $name . '=' . $value;
+                    $first = false;
+                }
             }
         }
         return $q;
@@ -166,8 +172,8 @@ class Request {
      * @return array 
      * @throws TpReport\HttpErrorException
      */
-    public function query() {
-        
+    public function query() 
+    {    
         $response = \Httpful\Request::get(str_replace(" ", "%20", $this->getUrl()))
                 ->addHeader('Accept', 'application/json')
                 ->authenticateWith($this->username, $this->password)
