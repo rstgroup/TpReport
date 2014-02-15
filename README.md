@@ -6,7 +6,7 @@ Simple tool for fetching items from [TargetProcess](http://dev.targetprocess.com
 Configuring
 -----------
 * Use [Composer](https://getcomposer.org) and define dependencies by adding following configuration:
-```
+```json
    "repositories": [
         {
             "type": "vcs",
@@ -17,5 +17,5 @@ Configuring
         "ziolek/TpReport": "dev-master",
     }
 ```
-* Use [TpReport\Request](src/Request.php) class according to `example.php`
+* Use [TpReport\Request](src/Request.php) class according to the [example.php](example.php).
 
