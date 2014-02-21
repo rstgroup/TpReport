@@ -1,4 +1,4 @@
-TpReport [![Build Status](https://travis-ci.org/ziolek/TpReport.png?branch=master)](https://travis-ci.org/ziolek/TpReport)
+TpReport [![Build Status](https://travis-ci.org/RST-com-pl/TpReport.png?branch=master)](https://travis-ci.org/RST-com-pl/TpReport)
 ========
 
 Simple tool for fetching items from [TargetProcess](http://dev.targetprocess.com/rest/getting_started).
@@ -10,11 +10,11 @@ Configuring
    "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/ziolek/TpReport"
+            "url": "https://github.com/RST-com-pl/TpReport"
         }
     ],
     "require": {
-        "ziolek/TpReport": "dev-master",
+        "RST-com-pl/TpReport": "dev-master",
     }
 ```
 * Use [TpReport\Request](src/Request.php) class according to the [example.php](example.php).

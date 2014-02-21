@@ -1,7 +1,7 @@
 {
-    "name": "ziolek/tpreport",
+    "name": "RST-com-pl/tpreport",
     "description": "Simple tool for fetching items from TargetProcess.",
-    "homepage": "http://github.com/ziolek/TpReport",
+    "homepage": "http://github.com/RST-com-pl/TpReport",
     "license": "MIT",
     "keywords": ["tp", "TargetProcess", "api", "rest"],
     "version": "1.0.0",
