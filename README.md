@@ -15,7 +15,7 @@ Configuring
         }
     ],
     "require": {
-        "rstgroup/TpReport": "dev-master",
+        "rstgroup/TpReport": "dev-master"
     }
 ```
 * Use [TpReport\Request](src/Request.php) class according to the [example.php](example.php).
