@@ -12,6 +12,12 @@ php:
   # aliased to a recent 5.5.x version
   - 5.5
 
+before_script:
+  - composer install
 
 # omitting "script:" will default to phpunit
 script: phpunit --coverage-text
+
+after_script:
+  - CODECLIMATE_REPO_TOKEN=29a82fa40c275c4f0284dbec38223289e64c77b3a6faf5ca68c1c0e6127a0d86 php ./vendor/bin/test-reporter
+  
