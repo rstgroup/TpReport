@@ -12,6 +12,10 @@ php:
   # aliased to a recent 5.5.x version
   - 5.5
 
+addons:
+  code_climate:
+    repo_token: 29a82fa40c275c4f0284dbec38223289e64c77b3a6faf5ca68c1c0e6127a0d86
+
 install:
   - composer install
 
@@ -19,5 +23,5 @@ install:
 script: phpunit --coverage-text
 
 after_script:
-  - CODECLIMATE_REPO_TOKEN=29a82fa40c275c4f0284dbec38223289e64c77b3a6faf5ca68c1c0e6127a0d86 php ./vendor/bin/test-reporter --stdout > codeclimate.json
-  - curl -X POST -d @codeclimate.json -H 'Content-Type:application/json' -H 'User-Agent:Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports
+  - vendor/bin/test-reporter
+
