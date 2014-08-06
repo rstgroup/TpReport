@@ -1,10 +1,10 @@
 {
-    "name": "RST-com-pl/tpreport",
+    "name": "rstgroup/tpreport",
     "description": "Simple tool for fetching items from TargetProcess.",
-    "homepage": "http://github.com/RST-com-pl/TpReport",
+    "homepage": "http://github.com/rstgroup/TpReport",
     "license": "MIT",
     "keywords": ["tp", "TargetProcess", "api", "rest"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "Marek Ziółkowski"
