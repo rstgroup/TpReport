@@ -12,7 +12,7 @@ php:
   # aliased to a recent 5.5.x version
   - 5.5
 
-before_script:
+install:
   - composer install
 
 # omitting "script:" will default to phpunit
