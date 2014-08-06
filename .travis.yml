@@ -19,5 +19,6 @@ before_script:
 script: phpunit --coverage-text
 
 after_script:
-  - CODECLIMATE_REPO_TOKEN=29a82fa40c275c4f0284dbec38223289e64c77b3a6faf5ca68c1c0e6127a0d86 php ./vendor/bin/test-reporter
+  - CODECLIMATE_REPO_TOKEN=29a82fa40c275c4f0284dbec38223289e64c77b3a6faf5ca68c1c0e6127a0d86 php ./vendor/bin/test-reporter > codeclimate.json
+  - curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports
   
