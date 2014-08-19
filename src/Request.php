@@ -38,7 +38,7 @@ class Request
      * Generates the condition string that will be put in the WHERE part.
      * Based on Yii query builder.
      * 
-     * @return string the condition string to put in the WHERE part
+     * @return string|array the condition string to put in the WHERE part
      * @throws \Exception
      */
     private function processConditions($conditions)
@@ -99,9 +99,11 @@ class Request
     }
 
     /**
+     * Builds where clause upon given parameters in form of Polish prefix notation (operators to the lefto of their operands).
+     * 
      * Always overwrites previews where conditions.
      * 
-     * @param mixed $conditions the conditions that should be put in the WHERE part.
+     * @param string|array $conditions the conditions that should be put in the WHERE part. String or array in form of Polish prefix notation.
      * @return \TpReport
      */
     public function where($conditions)

@@ -63,7 +63,17 @@ class RequestTest extends \PHPUnit_Framework_TestCase
                 ),
                 'Bugs',
                 "/Bugs?where=(Project.Id in (1,2,3)) and (EntityState.Name in ('New','In progress'))"
-            )
+            ),
+            array(
+                array(
+                    'and',
+                    'Project.Id = 1',
+                    "EntityState.Name = 'test'",
+                    'EntityState.Id = 2'
+                    ),
+                'Request',
+                "/Request?where=(Project.Id = 1) and (EntityState.Name = 'test') and (EntityState.Id = 2)"
+                )
         );
     }
 
