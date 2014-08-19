@@ -71,7 +71,7 @@ class Request
             $values = array($values);
         }
 
-        if ($operator === 'in' || $operator === 'not in') {
+        if ($operator === 'in') {
             if ($values === array()) {
                 return $operator === 'in' ? '0=1' : '';
             } foreach ($values as $i => $value) {
