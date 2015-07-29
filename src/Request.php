@@ -155,7 +155,7 @@ class Request
 
     /**
      * Sets acid parameter (Context wfor requests)
-     * @param type $acid
+     * @param string $acid
      * @return \TpReport\Request
      */
     public function setAcid($acid) 
