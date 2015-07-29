@@ -120,5 +120,11 @@ class RequestTest extends \PHPUnit_Framework_TestCase
             array(array('Project.Id', 'Project.Name'), '/Bugs?include=[Project.Id,Project.Name]')
         );
     }
+    
+    public function testSetAcid()
+    {
+        $url = $this->request->collection('Bugs')->setAcid('79131CEBD57DC2EC8E57A9A5CC31CBD7')->getUrl();
+        $this->assertEquals($this->api_base_url . '/Bugs?acid=79131CEBD57DC2EC8E57A9A5CC31CBD7', $url);
+    }
 
 }

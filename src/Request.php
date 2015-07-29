@@ -130,6 +130,18 @@ class Request
     }
 
     /**
+     * Adds or overwrite single parameter.
+     * 
+     * @param string $name
+     * @param mixed $value
+     */
+    private function addParam($name, $value)
+    {
+        if ($name != '') {
+            $this->params[$name] = $value;
+        }
+    }
+    /**
      * You can get items with specified fields only.
      * 
      * @param array $fields Fields to be included
@@ -138,6 +150,17 @@ class Request
     public function inc($fields)
     {
         $this->addArrayParams('include', $fields);
+        return $this;
+    }
+
+    /**
+     * Sets acid parameter (Context wfor requests)
+     * @param type $acid
+     * @return \TpReport\Request
+     */
+    public function setAcid($acid) 
+    {
+        $this->addParam('acid', $acid);
         return $this;
     }
 
