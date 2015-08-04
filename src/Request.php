@@ -108,7 +108,7 @@ class Request
      */
     public function where($conditions)
     {
-        $this->params['where'] = $this->processConditions($conditions);
+        $this->addParam('where', $this->processConditions($conditions));
         return $this;
     }
 
@@ -125,10 +125,22 @@ class Request
         }
 
         if ($name != '') {
-            $this->params[$name] = $values;
+            $this->addParam($name, $values);
         }
     }
 
+    /**
+     * Adds or overwrite single parameter.
+     * 
+     * @param string $name
+     * @param mixed $value
+     */
+    private function addParam($name, $value)
+    {
+        if ($name != '') {
+            $this->params[$name] = $value;
+        }
+    }
     /**
      * You can get items with specified fields only.
      * 
@@ -142,6 +154,17 @@ class Request
     }
 
     /**
+     * Sets acid parameter (Context wfor requests)
+     * @param string $acid
+     * @return \TpReport\Request
+     */
+    public function setAcid($acid) 
+    {
+        $this->addParam('acid', $acid);
+        return $this;
+    }
+
+    /**
      * Set the amount of items to be taken.
      * @see http://dev.targetprocess.com/rest/response_format#paging
      * 
@@ -151,7 +174,7 @@ class Request
     public function take($limit)
     {
         if (is_int($limit)) {
-            $this->params['take'] = $limit;
+            $this->addParam('take', $limit);
         }
         return $this;
     }
