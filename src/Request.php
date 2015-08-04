@@ -108,7 +108,7 @@ class Request
      */
     public function where($conditions)
     {
-        $this->params['where'] = $this->processConditions($conditions);
+        $this->addParam('where', $this->processConditions($conditions));
         return $this;
     }
 
@@ -125,7 +125,7 @@ class Request
         }
 
         if ($name != '') {
-            $this->params[$name] = $values;
+            $this->addParam($name, $values);
         }
     }
 
@@ -174,7 +174,7 @@ class Request
     public function take($limit)
     {
         if (is_int($limit)) {
-            $this->params['take'] = $limit;
+            $this->addParam('take', $limit);
         }
         return $this;
     }
