@@ -99,7 +99,25 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $url = $this->request->collection('Bugs')->take(666)->getUrl();
         $this->assertEquals($this->api_base_url . '/Bugs?take=666', $url);
     }
-    
+
+		public function testSkipRecords()
+		{
+        $url = $this->request->collection('Bugs')->take(25)->skip(40)->getUrl();
+        $this->assertEquals($this->api_base_url . '/Bugs?take=25&skip=40', $url);
+    }
+
+		public function testOrderByAsc()
+		{
+        $url = $this->request->collection('Bugs')->orderByAsc('Id')->getUrl();
+        $this->assertEquals($this->api_base_url . '/Bugs?orderBy=Id', $url);
+    }
+
+		public function testOrderByDesc()
+		{
+        $url = $this->request->collection('Bugs')->orderByDesc('Id')->getUrl();
+        $this->assertEquals($this->api_base_url . '/Bugs?orderByDesc=Id', $url);
+    }
+
     /**
      * 
      * @param array $include

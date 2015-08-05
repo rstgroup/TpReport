@@ -26,13 +26,29 @@ class Request
     public function __construct($api_base_url, $username = null, $password = null)
     {
         if ($api_base_url == '') {
-            throw new Exception('Undefined API base URL');
+            throw new \Exception('Undefined API base URL');
         } else {
             $this->api_base_url = $api_base_url;
         }
         $this->username = $username;
         $this->password = $password;
     }
+
+    /**
+		 * Allow the use of normal Dev and SQL commands when formatting the query condition instead of TP specific ones
+		 * This makes it easier to read and understand the queries
+		 * @see http://dev.targetprocess.com/rest/response_format#filtering
+		 *
+		 * @param string $value		The condition
+		 * @return string
+		 */
+		private function processTags($value)
+		{
+			$from = array('=', '!=', '<>', '>', '<', '>=', '<=', ' is false', ' is true', " like '");
+			$to = array(' eq ', ' ne ', ' ne ', ' gt ', ' lt ', ' gte ', ' lte ', " eq 'false'", " eq 'true'", " contains '");
+
+			return str_ireplace($from, $to, $value);
+		}
 
     /**
      * Generates the condition string that will be put in the WHERE part.
@@ -44,7 +60,7 @@ class Request
     private function processConditions($conditions)
     {
         if (!is_array($conditions)) {
-            return $conditions;
+            return $this->processTags($conditions);
         } elseif ($conditions === array()) {
             return '';
         }
@@ -81,7 +97,7 @@ class Request
                     $values[$i] = (string) $value;
                 }
             }
-            return $column . ' ' . $operator . ' (' . implode(',', $values) . ')';
+            return $this->processTags($column . ' ' . $operator . ' (' . implode(',', $values) . ')');
         }
         throw new \Exception('Unknown operator ' . $operator);
     }
@@ -90,7 +106,7 @@ class Request
      * Set collection name.
      * 
      * @param string $name Collection name
-     * @return \TpReport
+     * @return \TpReport\Request
      */
     public function collection($name)
     {
@@ -104,7 +120,7 @@ class Request
      * Always overwrites previews where conditions.
      * 
      * @param string|array $conditions the conditions that should be put in the WHERE part. String or array in form of Polish prefix notation.
-     * @return \TpReport
+     * @return \TpReport\Request
      */
     public function where($conditions)
     {
@@ -145,7 +161,7 @@ class Request
      * You can get items with specified fields only.
      * 
      * @param array $fields Fields to be included
-     * @return \TpReport
+     * @return \TpReport\Request
      */
     public function inc($fields)
     {
@@ -169,7 +185,7 @@ class Request
      * @see http://dev.targetprocess.com/rest/response_format#paging
      * 
      * @param int $limit
-     * @return \TpReport
+     * @return \TpReport\Request
      */
     public function take($limit)
     {
@@ -180,10 +196,56 @@ class Request
     }
 
     /**
+     * Set the amount of items to skip.
+     * @see http://dev.targetprocess.com/rest/response_format#paging
+     *
+     * @param int $limit
+     * @return \TpReport\Request
+     */
+    public function skip($limit)
+    {
+        if (is_int($limit)) {
+            $this->params['skip'] = $limit;
+        }
+        return $this;
+    }
+
+		/**
+     * Set the order the content is sorted
+     * @see http://dev.targetprocess.com/rest/response_format#sorting
+     *
+     * @param string $column 		The column we should sort by
+     * @return \TpReport\Request
+     */
+		public function orderByAsc($column)
+		{
+
+			$this->params['orderBy'] = $column;
+
+			return $this;
+		}
+
+		/**
+     * Set the order the content is sorted
+     * @see http://dev.targetprocess.com/rest/response_format#sorting
+     *
+     * @param string $column 		The column we should sort by
+     * @return \TpReport\Request
+     */
+		public function orderByDesc($column)
+		{
+
+			$this->params['orderByDesc'] = $column;
+
+			return $this;
+		}
+
+    /**
      * Final URL buliding.
      * @see http://dev.targetprocess.com/rest/response_format#filtering
      * 
      * @return string
+     * @throws \Exception
      */
     public function getUrl()
     {
